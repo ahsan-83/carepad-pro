@@ -10,10 +10,14 @@ async function initializeConnection() {
     //};
 
     const connectionConfig = {
-      host: "carepad.ctuissq42950.ap-southeast-2.rds.amazonaws.com",
-      user: "admin",
-      password: "p17uGtoC8",
-      database: "carepad",
+      //host: "carepad.ctuissq42950.ap-southeast-2.rds.amazonaws.com",
+	  host: "mysql-203508-0.cloudclusters.net",
+	  port: "19998",
+	  user: "admin",
+      //password: "p17uGtoC8",
+	  password: "4fmrG7kC",
+	  database: "carepad",
+	  waitForConnections: true,
     };
 
     const connection = await mysql.createConnection(connectionConfig);

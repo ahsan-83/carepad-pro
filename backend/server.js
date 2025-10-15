@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 app.use(cors({
   origin: [
-    "http://localhost:8080",
+    "https://darkgrey-salmon-418866.hostingersite.com/",
   ],
   methods: ["GET", "POST", "PUT","DELETE"],
   allowedHeaders: ["Content-Type", "Authorization","Verification","bmdc"],

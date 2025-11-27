@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const feedbackController = require("../controllers/feedbackController");
 const authenticateToken = require("../middlewares/authenticateToken");
-const validate = require('../middlewares/validate');
+const validate = require('../middlewares/validate').default;
 const { body, check } = require('express-validator');
 
 router.post("/addfeedback", [

@@ -1,32 +1,49 @@
+require("dotenv").config();
 const mysql = require("mysql2/promise");
 
 async function initializeConnection() {
-  try {
-    //constconnectionConfig = {
-    //  host: process.env.DB_HOST,
-    //  user: process.env.DB_USER,
-    //  password: process.env.DB_PASSWORD,
-    //  database: process.env.DB_NAME,
-    //};
 
+  try {
     const connectionConfig = {
-      //host: "carepad.ctuissq42950.ap-southeast-2.rds.amazonaws.com",
-	  host: "mysql-203508-0.cloudclusters.net",
-	  port: "19998",
-	  user: "admin",
-      //password: "p17uGtoC8",
-	  password: "4fmrG7kC",
-	  database: "carepad",
-	  waitForConnections: true,
+      host: "srv1673.hstgr.io",
+      user: "u186255566_admin",
+      password: "p17uGtoC8@",
+      database: "u186255566_carepad",
+      dateStrings: true,
+      timezone: "+06:00",
+      connectTimeout: 15000, // 15 seconds
     };
 
     const connection = await mysql.createConnection(connectionConfig);
 
     return connection;
   } catch (err) {
-    console.error("Error connecting to database:", err);
+    console.error("🟥 [DB] Error connecting to MySQL:", err);
     throw err;
   }
 }
 
-module.exports = { initializeConnection };
+async function customConnection(db_host, db_user, db_password, db_name) {
+
+  try {
+    const connectionConfig = {
+      host: db_host,
+      user: db_user,
+      password: db_password,
+      database: db_name,
+      dateStrings: true,
+      timezone: "+06:00",
+      connectTimeout: 15000, // 15 seconds
+    };
+
+    const connection = await mysql.createConnection(connectionConfig);
+
+    return connection;
+  } catch (err) {
+    console.error("🟥 [DB] Error connecting to Custom MySQL:", err);
+    throw err;
+  }
+}
+
+module.exports = { initializeConnection, customConnection };
+

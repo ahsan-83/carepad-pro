@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const analyticsController = require("../controllers/analyticsController");
 const authenticateToken = require("../middlewares/authenticateToken");
-const validate = require('../middlewares/validate');
+const validate = require('../middlewares/validate').default;
 const { body } = require('express-validator');
 
 router.get("/counts", [
@@ -20,8 +20,5 @@ router.post("/patientpermonth",[
     body('sex').isString().withMessage('Enter valid sex'),
 ],validate, authenticateToken,analyticsController.getPatientPerMonth);
 
-router.get("/genderdist", authenticateToken, analyticsController.getGenderDist);
-
-//router.get("/processquery", authenticateToken, analyticsController.getQueryResults);
 
 module.exports = router;

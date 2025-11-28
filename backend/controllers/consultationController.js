@@ -119,7 +119,7 @@ exports.addConsultation = async (req, res) => {
 
     // ✅ 6. Check duplicate appointment
     const [existingRows] = await customDBConnection.query(
-      `SELECT id, date, serialNo
+      `SELECT *
        FROM \`${consultation_db}\`
        WHERE phone = ?
        AND DATE(date) = DATE(?) 
@@ -133,7 +133,7 @@ exports.addConsultation = async (req, res) => {
       customDBConnection.end();
 
       const existing = existingRows[0];
-      return res.status(409).json({
+      return res.status(201).json({
         success: false,
         reason: "duplicate_appointment",
         title: "Appointment Already Exists",
@@ -141,9 +141,13 @@ exports.addConsultation = async (req, res) => {
           existing.date
         ).toLocaleDateString()} with Dr. ${doctorName}.`,
         existingAppointment: {
+          patient: { name, age, sex, phone, email, address },
+          doctor: { name: doctorName, bmdc },
+          location: { id: consultLocationId, name: locationName },
+          slot: { id: timeSlotId, startTime, endTime, capacity },
           serialNo: existing.serialNo,
           date: existing.date,
-          location: locationName,
+          status: existing.appointmentStatus,
           slotTime: `${startTime} - ${endTime}`,
         },
       });
